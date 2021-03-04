@@ -28,6 +28,7 @@ jobs:
         fftw3
         hidapi
         hss1394
+        libdjinterop
         libebur128
         libflac
         libid3tag
