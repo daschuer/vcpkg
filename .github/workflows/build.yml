@@ -76,7 +76,7 @@ jobs:
 
     - name: "[macOS] Bootstrap vcpkg"
       if: runner.os == 'macOS'
-      run: brew install yasm automake
+      run: brew install nasm automake
 
     - name: Set up cache
       uses: actions/cache@v2
