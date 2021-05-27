@@ -8,17 +8,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-2019
-            vcpkg_path: C:\mixxx-vcpkg
-            vcpkg_bootstrap: .\bootstrap-vcpkg.bat
-            vcpkg_triplet: x64-windows
-            check_disk_space: Get-PSDrive
-            #- os: macos-10.15
-            #  vcpkg_path: /Users/runner/mixxx-vcpkg
-            #  vcpkg_bootstrap: ./bootstrap-vcpkg.sh
-            #  vcpkg_triplet: x64-osx
-            #  vcpkg_cache: /Users/runner/.cache/vcpkg/archives
-            #  check_disk_space: df -h
+          #- os: windows-2019
+          #  vcpkg_path: C:\mixxx-vcpkg
+          #  vcpkg_bootstrap: .\bootstrap-vcpkg.bat
+          #  vcpkg_triplet: x64-windows
+          # check_disk_space: Get-PSDrive
+          - os: macos-10.15
+            vcpkg_path: /Users/runner/mixxx-vcpkg
+            vcpkg_bootstrap: ./bootstrap-vcpkg.sh
+            vcpkg_triplet: x64-osx
+            vcpkg_cache: /Users/runner/.cache/vcpkg/archives
+            check_disk_space: df -h
     env:
       VCPKG_PACKAGES: >-
         angle
