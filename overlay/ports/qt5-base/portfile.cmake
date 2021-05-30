@@ -154,6 +154,10 @@ elseif(VCPKG_TARGET_IS_LINUX)
 elseif(VCPKG_TARGET_IS_OSX)
     if(DEFINED VCPKG_OSX_DEPLOYMENT_TARGET)
         set(ENV{QMAKE_MACOSX_DEPLOYMENT_TARGET} ${VCPKG_OSX_DEPLOYMENT_TARGET})
+        set(ENV{QMAKE_CXX_FLAGS} ${VCPKG_CXX_FLAGS})
+        set(ENV{QMAKE_C_FLAGS} ${VCPKG_C_FLAGS})
+        set(ENV{CXXFLAGS} ${VCPKG_CXX_FLAGS})
+        set(ENV{CFLAGS} ${VCPKG_C_FLAGS})
     else()
         execute_process(COMMAND xcrun --show-sdk-version
                             OUTPUT_FILE OSX_SDK_VER.txt
