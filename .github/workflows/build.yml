@@ -59,6 +59,9 @@ jobs:
         wavpack
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
       VCPKG_OVERLAY_PORTS: overlay/ports
+      VCPKG_OSX_DEPLOYMENT_TARGET: 10.12
+      VCPKG_C_FLAGS: -mmacosx-version-min=10.12
+      VCPKG_CXX_FLAGS: -mmacosx-version-min=10.12
       MIXXX_VERSION: 2.3
       DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     name: ${{ matrix.os }}
