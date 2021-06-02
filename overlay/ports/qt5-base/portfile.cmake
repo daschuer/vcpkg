@@ -169,12 +169,39 @@ elseif(VCPKG_TARGET_IS_OSX)
     set(ENV{QMAKE_MACOSX_DEPLOYMENT_TARGET} ${VCPKG_OSX_DEPLOYMENT_TARGET})
     message(STATUS "Enviromnent OSX SDK Version: $ENV{QMAKE_MACOSX_DEPLOYMENT_TARGET}")
     FILE(READ "${SOURCE_PATH}/mkspecs/common/macx.conf" _tmp_contents)
-        string(REPLACE "QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12" "QMAKE_MACOSX_DEPLOYMENT_TARGET = ${VCPKG_OSX_DEPLOYMENT_TARGET}" _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12" 
+            "QMAKE_MACOSX_DEPLOYMENT_TARGET = ${VCPKG_OSX_DEPLOYMENT_TARGET}" 
+            _tmp_contents ${_tmp_contents})
     FILE(WRITE "${SOURCE_PATH}/mkspecs/common/macx.conf" ${_tmp_contents})
     FILE(READ "${SOURCE_PATH}/src/corelib/configure.json" _tmp_contents)
         string(REPLACE 
             "darwin: QMAKE_CXXFLAGS += -Werror=unguarded-availability\"" 
             "darwin: QMAKE_CXXFLAGS += -Werror=unguarded-availability -Werror=unguarded-availability-new\", \"CONFIG += warn_on\"" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "double_conversion::StringToDoubleConverter::NO_FLAGS" 
+            "double_conversion::StringToDoubleConverter::NO_FLAGS;" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "std::mt19937 mt(0)" 
+            "std::mt19937 mt(0);" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "timespec ts; clock_gettime(CLOCK_REALTIME, &ts);" 
+            "timespec ts;; clock_gettime(CLOCK_REALTIME, &ts);;" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "futimens(-1, 0)" 
+            "futimens(-1, 0));" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "futimens(-1, 0)" 
+            "futimens(-1, 0));" 
+            _tmp_contents ${_tmp_contents})
+        string(REPLACE 
+            "futimes(-1, 0)" 
+            "futimes(-1, 0));" 
             _tmp_contents ${_tmp_contents})
     FILE(WRITE "${SOURCE_PATH}/src/corelib/configure.json" ${_tmp_contents})
     #list(APPEND QT_PLATFORM_CONFIGURE_OPTIONS HOST_PLATFORM ${TARGET_MKSPEC})
