@@ -27,14 +27,12 @@ jobs:
         ffmpeg
         fftw3
         hidapi
-        hss1394
         libebur128
         libflac
         libkeyfinder
         libmodplug
         libogg
         libopusenc
-        libshout
         libsndfile
         libusb
         libvorbis
@@ -42,7 +40,7 @@ jobs:
         mp3lame
         opus
         opusfile
-        portaudio[asio]
+        portaudio
         portmidi
         protobuf
         pthreads
@@ -53,12 +51,11 @@ jobs:
         qt5-translations
         qt5-macextras
         qtkeychain
-        rubberband
         soundtouch
         taglib
         wavpack
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
-      VCPKG_OVERLAY_PORTS: overlay/ports
+      # VCPKG_OVERLAY_PORTS: overlay/ports
       MIXXX_VERSION: 2.3
       DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     name: ${{ matrix.os }}
