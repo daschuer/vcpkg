@@ -41,7 +41,6 @@ jobs:
         opus
         opusfile
         portaudio
-        portmidi
         protobuf
         pthreads
         qt5-base
