@@ -287,6 +287,7 @@ else()
         DETERMINE_BUILD_TRIPLET
         OPTIONS
             ${BUILD_OPTS}
+            PG_SYSROOT=none
         OPTIONS_DEBUG
             --enable-debug
     )
