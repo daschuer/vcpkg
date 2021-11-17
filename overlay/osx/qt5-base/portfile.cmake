@@ -173,6 +173,12 @@ elseif(VCPKG_TARGET_IS_OSX)
             "QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12" 
             "QMAKE_MACOSX_DEPLOYMENT_TARGET = ${VCPKG_OSX_DEPLOYMENT_TARGET}" 
             _tmp_contents "${_tmp_contents}")
+        if("${VCPKG_TARGET_ARCHITECTURE}" MATCHES "arm64")
+            string(REPLACE 
+                "QMAKE_APPLE_DEVICE_ARCHS = x86_64" 
+                "QMAKE_APPLE_DEVICE_ARCHS = arm64" 
+                _tmp_contents ${_tmp_contents})
+        endif()
     FILE(WRITE "${SOURCE_PATH}/mkspecs/common/macx.conf" "${_tmp_contents}")
     FILE(READ "${SOURCE_PATH}/src/corelib/configure.json" _tmp_contents)
         string(REPLACE 
