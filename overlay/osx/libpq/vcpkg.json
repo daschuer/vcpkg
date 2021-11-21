@@ -1,11 +1,12 @@
 {
   "name": "libpq",
   "version": "12.9",
-  "port-version": 32,
+  "port-version": 36,
   "description": "The official database access API of postgresql",
   "homepage": "https://www.postgresql.org/",
   "supports": "!uwp",
   "dependencies": [
+    "fontconfig",
     {
       "name": "libpq",
       "default-features": false,
