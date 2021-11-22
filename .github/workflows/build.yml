@@ -67,7 +67,8 @@ jobs:
       VCPKG_OVERLAY_TRIPLETS: ${{ matrix.vcpkg_path }}/overlay/triplets
       VCPKG_OVERLAY_PORTS: ${{ matrix.vcpkg_overlay_ports }}
       DEPS_BASE_NAME: mixxx-deps
-      DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_12.2.app/Contents/Developer
+      SDKROOT: /Applications/Xcode_12.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
       MIXXX_VERSION: 2.4
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
