@@ -34,7 +34,7 @@ qt_download_submodule(  OUT_SOURCE_PATH SOURCE_PATH
                     )
 
 # Remove vendored dependencies to ensure they are not picked up by the build
-foreach(DEPENDENCY freetype zlib harfbuzz-ng libjpeg libpng double-conversion sqlite pcre2)
+foreach(DEPENDENCY freetype harfbuzz-ng libjpeg libpng double-conversion sqlite pcre2)
     if(EXISTS ${SOURCE_PATH}/src/3rdparty/${DEPENDENCY})
         file(REMOVE_RECURSE ${SOURCE_PATH}/src/3rdparty/${DEPENDENCY})
     endif()
@@ -55,7 +55,7 @@ set(CORE_OPTIONS
     #-ltcg
     #-combined-angle-lib 
     # ENV ANGLE_DIR to external angle source dir. (Will always be compiled with Qt)
-    #-optimized-tools
+    -optimized-tools
     #-force-debug-info
     -verbose
 )
@@ -150,7 +150,18 @@ elseif(VCPKG_TARGET_IS_LINUX)
             "PSQL_LIBS=${PSQL_DEBUG} ${SSL_DEBUG} ${EAY_DEBUG} -ldl -lpthread"
             "SQLITE_LIBS=${SQLITE_DEBUG} -ldl -lpthread"
             "HARFBUZZ_LIBS=${HARFBUZZ_DEBUG}"
-        )
+        )  
+      
+    if("${TARGET_MKSPEC}" STREQUAL "linux-arm-gnueabihf-g++")
+        file(COPY "${SOURCE_PATH}/mkspecs/linux-arm-gnueabi-g++/" DESTINATION "${SOURCE_PATH}/mkspecs/linux-arm-gnueabihf-g++")
+        FILE(READ "${SOURCE_PATH}/mkspecs/linux-arm-gnueabihf-g++/qmake.conf" _tmp_contents)
+            string(REPLACE 
+                "arm-linux-gnueabi-"
+                "arm-linux-gnueabihf-" 
+		_tmp_contents "${_tmp_contents}")
+        FILE(WRITE "${SOURCE_PATH}/mkspecs/linux-arm-gnueabihf-g++/qmake.conf" "${_tmp_contents}")
+        list(APPEND CORE_OPTIONS -no-opengl)
+    endif()       
 elseif(VCPKG_TARGET_IS_OSX)
     if(NOT DEFINED VCPKG_OSX_DEPLOYMENT_TARGET)
         execute_process(COMMAND xcrun --show-sdk-version
@@ -166,20 +177,34 @@ elseif(VCPKG_TARGET_IS_OSX)
             set(VCPKG_OSX_DEPLOYMENT_TARGET "10.15")
         endif()
     endif()
-    set(ENV{QMAKE_MACOSX_DEPLOYMENT_TARGET} ${VCPKG_OSX_DEPLOYMENT_TARGET})
-    message(STATUS "Enviromnent OSX SDK Version: $ENV{QMAKE_MACOSX_DEPLOYMENT_TARGET}")
-    FILE(READ "${SOURCE_PATH}/mkspecs/common/macx.conf" _tmp_contents)
+
+    if("${TARGET_MKSPEC}" STREQUAL "macx-aarch64-clang")
+        file(COPY "${SOURCE_PATH}/mkspecs/macx-clang/" DESTINATION "${SOURCE_PATH}/mkspecs/macx-aarch64-clang")
+        FILE(READ "${SOURCE_PATH}/mkspecs/macx-aarch64-clang/qmake.conf" _tmp_contents)
+            string(REPLACE 
+				"macx.conf" 
+				"macx-aarch64.conf" 
+				_tmp_contents "${_tmp_contents}")
+		FILE(WRITE "${SOURCE_PATH}/mkspecs/macx-aarch64-clang/qmake.conf" "${_tmp_contents}")
+		FILE(READ "${SOURCE_PATH}/mkspecs/common/macx.conf" _tmp_contents)
+			string(REPLACE 
+				"QMAKE_APPLE_DEVICE_ARCHS = x86_64" 
+				"QMAKE_APPLE_DEVICE_ARCHS = arm64" 
+				_tmp_contents ${_tmp_contents})
+			string(REPLACE 
+				"QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12" 
+				"QMAKE_MACOSX_DEPLOYMENT_TARGET = ${VCPKG_OSX_DEPLOYMENT_TARGET}" 
+				_tmp_contents "${_tmp_contents}")	
+		FILE(WRITE "${SOURCE_PATH}/mkspecs/common/macx-aarch64.conf" "${_tmp_contents}")
+    else()
+	    FILE(READ "${SOURCE_PATH}/mkspecs/common/macx.conf" _tmp_contents)
         string(REPLACE 
             "QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12" 
             "QMAKE_MACOSX_DEPLOYMENT_TARGET = ${VCPKG_OSX_DEPLOYMENT_TARGET}" 
             _tmp_contents "${_tmp_contents}")
-        if("${VCPKG_TARGET_ARCHITECTURE}" MATCHES "arm64")
-            string(REPLACE 
-                "QMAKE_APPLE_DEVICE_ARCHS = x86_64" 
-                "QMAKE_APPLE_DEVICE_ARCHS = arm64" 
-                _tmp_contents ${_tmp_contents})
-        endif()
-    FILE(WRITE "${SOURCE_PATH}/mkspecs/common/macx.conf" "${_tmp_contents}")
+		FILE(WRITE "${SOURCE_PATH}/mkspecs/common/macx.conf" "${_tmp_contents}")
+    endif()	
+	
     FILE(READ "${SOURCE_PATH}/src/corelib/configure.json" _tmp_contents)
         string(REPLACE 
             "darwin: QMAKE_CXXFLAGS += -Werror=unguarded-availability\"" 
