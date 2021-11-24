@@ -79,8 +79,12 @@ function(qt_cmake_configure)
     if(VCPKG_CROSSCOMPILING)
         list(APPEND _qarg_OPTIONS -DQT_HOST_PATH=${CURRENT_HOST_INSTALLED_DIR})
         list(APPEND _qarg_OPTIONS -DQT_HOST_PATH_CMAKE_DIR:PATH=${CURRENT_HOST_INSTALLED_DIR}/share)
-        if(VCPKG_TARGET_ARCHITECTURE STREQUAL arm64 AND VCPKG_TARGET_IS_WINDOWS) # Remove if PR #16111 is merged
-            list(APPEND _qarg_OPTIONS -DCMAKE_CROSSCOMPILING=ON -DCMAKE_SYSTEM_PROCESSOR:STRING=ARM64 -DCMAKE_SYSTEM_NAME:STRING=Windows)
+        list(APPEND _qarg_OPTIONS -DCMAKE_CROSSCOMPILING=ON)
+		if(VCPKG_TARGET_ARCHITECTURE STREQUAL arm64)
+			list(APPEND _qarg_OPTIONS -DCMAKE_SYSTEM_PROCESSOR:STRING=ARM64)
+		endif()		
+		if(VCPKG_TARGET_IS_WINDOWS) # Remove if PR #16111 is merged
+            list(APPEND -DCMAKE_SYSTEM_NAME:STRING=Windows)
         endif()
     endif()
 
@@ -92,8 +96,6 @@ function(qt_cmake_configure)
             #-DQT_PLATFORM_DEFINITION_DIR=mkspecs/win32-msvc
             #-DQT_QMAKE_TARGET_MKSPEC=win32-msvc
             #-DQT_USE_CCACHE
-            -DQT_NO_MAKE_EXAMPLES:BOOL=TRUE
-            -DQT_NO_MAKE_TESTS:BOOL=TRUE
             ${PERL_OPTION}
             -DINSTALL_BINDIR:STRING=bin
             -DINSTALL_LIBEXECDIR:STRING=bin
