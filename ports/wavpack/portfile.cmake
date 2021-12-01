@@ -1,4 +1,6 @@
-vcpkg_fail_port_install(ON_ARCH "arm" "arm64")
+if(VCPKG_TARGET_IS_WINDOWS)
+    vcpkg_fail_port_install(ON_ARCH "arm" "arm64")
+endif()
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
