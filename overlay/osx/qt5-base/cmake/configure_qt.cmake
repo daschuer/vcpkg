@@ -91,13 +91,12 @@ function(configure_qt)
         # makefiles will be fixed to install into CURRENT_PACKAGES_DIR in install_qt
         set(BUILD_OPTIONS ${_csc_OPTIONS} ${_csc_OPTIONS_${_buildname}}
                 -prefix ${CURRENT_INSTALLED_DIR}
-                #-sysroot ${CURRENT_INSTALLED_DIR}
-                #-extprefix ${CURRENT_INSTALLED_DIR}
+                #-extprefix ${CURRENT_INSTALLED_DIR}  
                 ${EXT_BIN_DIR}
                 #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}
-                #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
+                -hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
                 #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/lib # could probably be move to manual-link
-				#-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5/lib
+                #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5/lib
                 #-hostbindir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/bin 
                 #-hostbindir ${CURRENT_INSTALLED_DIR}/tools/qt5/bin 
                 # Qt VS Plugin requires a /bin subfolder with the executables in the root dir. But to use the wizard a correctly setup lib folder is also required
@@ -148,9 +147,7 @@ function(configure_qt)
         string(REPLACE "[EffectiveSourcePaths]\nPrefix=${_csc_SOURCE_PATH}\n" "" _contents ${_contents})
         string(REPLACE "Sysroot=\n" "" _contents ${_contents})
         string(REPLACE "SysrootifyPrefix=false\n" "" _contents ${_contents})
-        file(WRITE "${CURRENT_PACKAGES_DIR}/tools/qt5/qt_${_build_type_${_buildname}}.conf" "${_contents}")  
-        message(STATUS  "${CURRENT_BUILDTREES_DIR}/${_build_triplet}/bin/qt.conf --------------------")  
-        message(STATUS "${_contents}")  
+        file(WRITE "${CURRENT_PACKAGES_DIR}/tools/qt5/qt_${_build_type_${_buildname}}.conf" "${_contents}")     
     endforeach()  
 
 endfunction()
