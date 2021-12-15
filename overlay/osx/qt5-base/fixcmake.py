@@ -18,6 +18,8 @@ for f in files:
     exepattern = re.compile("_install_prefix}/bin/[a-z]+(.exe|)")
     toolexepattern = re.compile("_install_prefix}/tools/qt5/bin/[a-z]+(.exe|)")
     tooldllpattern = re.compile("_install_prefix}/tools/qt5/bin/Qt5.*d+(.dll|.so)")
+    abstoolpattern = re.compile(r'"\/.*\/([^\/]*\/tools\/qt5\/bin)')
+    
     for line in openedfile:
         if "_install_prefix}/tools/qt5/${LIB_LOCATION}" in line:
             builder += "    if (${Configuration} STREQUAL \"RELEASE\")"
@@ -68,8 +70,9 @@ for f in files:
             builder += line.replace("/tools/qt5/bin", "/debug/bin/")
         elif exepattern.search(line) != None:
             builder += line.replace("/bin/", tooldir)
-        elif toolexepattern.search(line) != None:
-            builder += line.replace("/tools/qt5/bin/",tooldir)
+        elif abstoolpattern.search(line) != None:
+            line = abstoolpattern.sub("\"${CMAKE_CURRENT_LIST_DIR}/../../../../\\g<1>", line)
+            builder += line.replace("/tools/qt5/bin/", tooldir)
         else:
             builder += line
     new_file = open(f, "w")
