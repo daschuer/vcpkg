@@ -119,7 +119,7 @@ qt_install_copyright("${SOURCE_PATH}")
 
 ##### qt_install_submodule
 
-if(VCPKG_TARGET_IS_OSX)
+if(VCPKG_TARGET_IS_OSX AND VCPKG_TARGET_ARCHITECTURE STREQUAL x64)
     set(OSX_APP_FOLDERS Designer.app Linguist.app pixeltool.app qdbusviewer.app)
     foreach(_appfolder IN LISTS OSX_APP_FOLDERS)
         message(STATUS "Moving: ${_appfolder}")
