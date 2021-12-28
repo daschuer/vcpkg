@@ -27,6 +27,8 @@ This command should always be called by portfiles after they have finished rearr
 function(vcpkg_copy_pdbs)
     cmake_parse_arguments(PARSE_ARGV 0 "arg" "" "" "BUILD_PATHS")
 
+    message(WARNING "${CMAKE_CURRENT_FUNCTION} called 1")
+
     if(DEFINED arg_UNPARSED_ARGUMENTS)
         message(WARNING "${CMAKE_CURRENT_FUNCTION} was passed extra arguments: ${arg_UNPARSED_ARGUMENTS}")
     endif()
@@ -40,17 +42,24 @@ function(vcpkg_copy_pdbs)
 
     set(dlls_without_matching_pdbs "")
 
+    message(WARNING "${CMAKE_CURRENT_FUNCTION} called 2")
+
     if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic" AND VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
         file(GLOB_RECURSE dlls ${arg_BUILD_PATHS})
+        
+        message(WARNING "${CMAKE_CURRENT_FUNCTION} ${dlls}")
 
         set(vslang_backup "$ENV{VSLANG}")
         set(ENV{VSLANG} 1033)
 
         foreach(dll IN LISTS dlls)
+        
+            message(WARNING "${dll}")
+        
             execute_process(COMMAND dumpbin /PDBPATH "${dll}"
                             COMMAND findstr PDB
                 OUTPUT_VARIABLE pdb_line
-                ERROR_QUIET
+                #ERROR_QUIET
                 RESULT_VARIABLE error_code
             )
 
