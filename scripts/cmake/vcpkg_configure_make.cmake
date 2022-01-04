@@ -461,13 +461,10 @@ function(vcpkg_configure_make)
     # Linux - cross-compiling support
     if(VCPKG_TARGET_IS_LINUX)
         if (requires_autoconfig AND NOT arg_BUILD_TRIPLET OR arg_DETERMINE_BUILD_TRIPLET)
-            # The regex below takes the prefix from the resulting CMAKE_C_COMPILER variable eg. arm-linux-gnueabihf-gcc 
-            # set in the common toolchains/linux.cmake
-            # This is used via --host as a prefix for all other bin tools as well. 
-            # Setting the compiler directly via CC=arm-linux-gnueabihf-gcc does not work acording to: 
-            # https://www.gnu.org/software/autoconf/manual/autoconf-2.65/html_node/Specifying-Target-Triplets.html
-            if(VCPKG_DETECTED_CMAKE_C_COMPILER MATCHES "([^\/]*)-gcc$" AND CMAKE_MATCH_1)
-                set(arg_BUILD_TRIPLET "--host=${CMAKE_MATCH_1}") # (Host activates crosscompilation; The name given here is just the prefix of the host tools for the target)
+            string(REGEX MATCH "([^\/]*)-gcc" TOOL_PREFIX_0 "${VCPKG_DETECTED_CMAKE_C_COMPILER}")
+            set(TOOL_PREFIX "${CMAKE_MATCH_1}") 
+            if(TOOL_PREFIX) 
+                set(arg_BUILD_TRIPLET "--host=${TOOL_PREFIX}") # (Host activates crosscompilation; The name given here is just the prefix of the host tools for the target)
             endif()
             debug_message("Using make triplet: ${arg_BUILD_TRIPLET}")
         endif()
