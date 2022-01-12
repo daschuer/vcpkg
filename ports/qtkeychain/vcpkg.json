@@ -20,7 +20,6 @@
     }
   ],
   "default-features": [
-    "translations"
   ],
   "features": {
     "translations": {
