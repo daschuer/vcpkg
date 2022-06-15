@@ -285,7 +285,7 @@ else()
     if(VCPKG_OSX_SYSROOT)
         list(APPEND BUILD_OPTS "PG_SYSROOT=${VCPKG_OSX_SYSROOT}")
     endif()
-    if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IO) AND BUILD_SHARED_LIBS) 
+    if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
         set(VCPKG_LINKER_FLAGS "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/lib")
     endif()  
     vcpkg_configure_make(
