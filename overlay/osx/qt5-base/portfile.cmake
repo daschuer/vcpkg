@@ -50,6 +50,7 @@ set(ENV{_CL_} "/utf-8")
 set(CORE_OPTIONS
     -confirm-license
     -opensource
+    -no-framework
     #-no-fontconfig
     #-simulator_and_device
     #-ltcg
