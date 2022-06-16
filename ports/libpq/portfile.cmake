@@ -286,7 +286,8 @@ else()
         list(APPEND BUILD_OPTS "PG_SYSROOT=${VCPKG_OSX_SYSROOT}")
     endif()
     if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
-        set(VCPKG_LINKER_FLAGS "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/lib")
+        set(VCPKG_LINKER_FLAGS_RELEASE "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/lib")
+        set(VCPKG_LINKER_FLAGS_DEBUG "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/debug/lib")
     endif()  
     vcpkg_configure_make(
         AUTOCONFIG
@@ -294,7 +295,6 @@ else()
         COPY_SOURCE
         DISABLE_VERBOSE_FLAGS
         DETERMINE_BUILD_TRIPLET
-        # CONFIGURE_ENVIRONMENT_VARIABLES DYLD_LIBRARY_PATH
         OPTIONS
             ${BUILD_OPTS}
         OPTIONS_DEBUG
