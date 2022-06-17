@@ -66,11 +66,11 @@ if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQU
     if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
       list(APPEND CORE_OPTIONS
           -no-rpath
-          -R "${CURRENT_INSTALLED_DIR}/lib"
+          -R "${CURRENT_INSTALLED_DIR}/lib")
     else()
       list(APPEND CORE_OPTIONS
           -no-rpath
-          -R "${CURRENT_INSTALLED_DIR}/debug/lib"
+          -R "${CURRENT_INSTALLED_DIR}/debug/lib")
     endif()
 endif()
 
