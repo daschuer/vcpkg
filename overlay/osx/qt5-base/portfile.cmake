@@ -47,10 +47,6 @@ file(REMOVE_RECURSE ${SOURCE_PATH}/include/QtZlib)
 # This fixes issues on machines with default codepages that are not ASCII compatible, such as some CJK encodings
 set(ENV{_CL_} "/utf-8")
 
-if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
-    set(VCPKG_LINKER_FLAGS_RELEASE "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/lib")
-    set(VCPKG_LINKER_FLAGS_DEBUG "-Wl,-rpath -Wl,${CURRENT_INSTALLED_DIR}/debug/lib")
-endif() 
 
 set(CORE_OPTIONS
     -confirm-license
@@ -65,6 +61,18 @@ set(CORE_OPTIONS
     #-force-debug-info
     -verbose
 )
+
+if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
+    if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
+      list(APPEND CORE_OPTIONS
+          -no-rpath
+          -R "${CURRENT_INSTALLED_DIR}/lib"
+    else()
+      list(APPEND CORE_OPTIONS
+          -no-rpath
+          -R "${CURRENT_INSTALLED_DIR}/debug/lib"
+    endif()
+endif()
 
 ## 3rd Party Libs
 list(APPEND CORE_OPTIONS
