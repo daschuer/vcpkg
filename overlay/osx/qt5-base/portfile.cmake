@@ -62,18 +62,6 @@ set(CORE_OPTIONS
     -verbose
 )
 
-if((VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_IOS) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
-    if(CMAKE_BUILD_TYPE STREQUAL "Release")
-      list(APPEND CORE_OPTIONS
-          -no-rpath
-          -R "${CURRENT_INSTALLED_DIR}/lib")
-    else()
-      list(APPEND CORE_OPTIONS
-          -no-rpath
-          -R "${CURRENT_INSTALLED_DIR}/debug/lib")
-    endif()
-endif()
-
 ## 3rd Party Libs
 list(APPEND CORE_OPTIONS
     -system-zlib
@@ -128,8 +116,7 @@ set(DEBUG_OPTIONS
             "FREETYPE_LIBS=${FREETYPE_DEBUG} ${BZ2_DEBUG} ${LIBPNG_DEBUG} ${ZLIB_DEBUG}"
             "QMAKE_LIBS_PRIVATE+=${BZ2_DEBUG}"
             "QMAKE_LIBS_PRIVATE+=${LIBPNG_DEBUG}"
-            )
-
+            )           
 
 if(VCPKG_TARGET_IS_WINDOWS)
     if(VCPKG_TARGET_IS_UWP)
@@ -205,6 +192,17 @@ elseif(VCPKG_TARGET_IS_OSX)
             "SQLITE_LIBS=${SQLITE_DEBUG} -ldl -lpthread"
             "HARFBUZZ_LIBS=${HARFBUZZ_DEBUG} -framework ApplicationServices"
         )     
+        
+    if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic") 
+      list(APPEND RELEASE_OPTIONS
+          -no-rpath
+          -R "${CURRENT_INSTALLED_DIR}/lib")
+      list(APPEND DEBUG_OPTIONS
+          -no-rpath
+          -R "${CURRENT_INSTALLED_DIR}/debug/lib")
+    endif()
+endif()
+        
 endif()
 
 ## Do not build tests or examples
