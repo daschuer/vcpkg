@@ -49,7 +49,7 @@ function(configure_qt)
 
     #Replace with VCPKG variables if PR #7733 is merged
     unset(BUILDTYPES)
-    message(FATAL_ERROR "VCPKG_BUILD_TYPE = ${VCPKG_BUILD_TYPE} CMAKE_BUILD_TYPE = ${CMAJE_BUILD_TYPE}")
+    message(STATUS "VCPKG_BUILD_TYPE = ${VCPKG_BUILD_TYPE} CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
     if(NOT DEFINED VCPKG_BUILD_TYPE OR "${VCPKG_BUILD_TYPE}" STREQUAL "debug")
         set(_buildname "DEBUG")
         list(APPEND BUILDTYPES ${_buildname})
