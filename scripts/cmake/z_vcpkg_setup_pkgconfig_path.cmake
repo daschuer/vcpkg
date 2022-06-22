@@ -21,20 +21,21 @@ function(z_vcpkg_setup_pkgconfig_path)
         message(FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} was passed extra arguments: ${arg_UNPARSED_ARGUMENTS}")
     endif()
 
-    vcpkg_backup_env_variables(VARS PKG_CONFIG PKG_CONFIG_PATH)
+    vcpkg_backup_env_variables(VARS PKG_CONFIG PKG_CONFIG_PATH PKG_CONFIG_LIBDIR)
 
     vcpkg_find_acquire_program(PKGCONFIG)
     get_filename_component(pkgconfig_path "${PKGCONFIG}" DIRECTORY)
     vcpkg_add_to_path("${pkgconfig_path}")
 
     set(ENV{PKG_CONFIG} "${PKGCONFIG}") # Set via native file?
+    set(ENV{PKG_CONFIG_PATH} "") 
 
     foreach(base_dir IN LISTS arg_BASE_DIRS)
-        vcpkg_host_path_list(PREPEND ENV{PKG_CONFIG_PATH} "${base_dir}/share/pkgconfig/")
+        vcpkg_host_path_list(PREPEND ENV{PKG_CONFIG_LIBDIR} "${base_dir}/share/pkgconfig/")
     endforeach()
 
     foreach(base_dir IN LISTS arg_BASE_DIRS)
-        vcpkg_host_path_list(PREPEND ENV{PKG_CONFIG_PATH} "${base_dir}/lib/pkgconfig/")
+        vcpkg_host_path_list(PREPEND ENV{PKG_CONFIG_LIBDIR} "${base_dir}/lib/pkgconfig/")
     endforeach()
 endfunction()
 
@@ -44,5 +45,5 @@ function(z_vcpkg_restore_pkgconfig_path)
         message(FATAL_ERROR "${CMAKE_CURRENT_FUNCTION} was passed extra arguments: ${arg_UNPARSED_ARGUMENTS}")
     endif()
 
-    vcpkg_restore_env_variables(VARS PKG_CONFIG PKG_CONFIG_PATH)
+    vcpkg_restore_env_variables(VARS PKG_CONFIG PKG_CONFIG_PATH PKG_CONFIG_LIBDIR)
 endfunction()
