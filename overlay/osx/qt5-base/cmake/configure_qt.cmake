@@ -67,13 +67,18 @@ function(configure_qt)
     unset(_buildname)
    
     foreach(_buildname ${BUILDTYPES})
-        z_vcpkg_setup_pkgconfig_path(BASE_DIRS "${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}" "${CURRENT_PACKAGES_DIR}${_path_suffix_${_buildname}}")
+        # z_vcpkg_setup_pkgconfig_path(BASE_DIRS "${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}" "${CURRENT_PACKAGES_DIR}${_path_suffix_${_buildname}}")
         set(_build_triplet ${TARGET_TRIPLET}-${_short_name_${_buildname}})
         message(STATUS "Configuring ${_build_triplet}")
         set(_build_dir "${CURRENT_BUILDTREES_DIR}/${_build_triplet}")
         file(MAKE_DIRECTORY ${_build_dir})
         # These paths get hardcoded into qmake. So point them into the CURRENT_INSTALLED_DIR instead of CURRENT_PACKAGES_DIR
         # makefiles will be fixed to install into CURRENT_PACKAGES_DIR in install_qt
+        
+        if(EXISTS "${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib/manual-link")
+            set(_manual_link_${_buildname} "-L ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib/manual-link")
+        endif()
+        
         set(BUILD_OPTIONS ${_csc_OPTIONS} ${_csc_OPTIONS_${_buildname}}
                 -prefix ${CURRENT_INSTALLED_DIR}
                 #-extprefix ${CURRENT_INSTALLED_DIR}  
@@ -97,7 +102,7 @@ function(configure_qt)
                 -I ${CURRENT_INSTALLED_DIR}/include
                 -I ${CURRENT_INSTALLED_DIR}/include/qt5
                 -L ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib 
-                -L ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib/manual-link
+                ${_manual_link_${_buildname}}
                 -xplatform ${_csc_TARGET_PLATFORM}
             )
         
@@ -134,7 +139,7 @@ function(configure_qt)
         string(REPLACE "SysrootifyPrefix=false\n" "" _contents ${_contents})
         file(WRITE "${CURRENT_PACKAGES_DIR}/tools/qt5/qt_${_build_type_${_buildname}}.conf" "${_contents}")     
     
-        z_vcpkg_restore_pkgconfig_path()
+        # z_vcpkg_restore_pkgconfig_path()
     endforeach()  
 
 endfunction()
