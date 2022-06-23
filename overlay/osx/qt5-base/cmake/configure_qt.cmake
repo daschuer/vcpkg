@@ -83,8 +83,8 @@ function(configure_qt)
                 -prefix ${CURRENT_INSTALLED_DIR}
                 #-extprefix ${CURRENT_INSTALLED_DIR}  
                 ${EXT_BIN_DIR}
-                #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}
-                -hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
+                -hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}
+                #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
                 #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/lib # could probably be move to manual-link
                 #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5/lib
                 #-hostbindir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/bin 
