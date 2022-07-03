@@ -27,8 +27,7 @@
       "description": "Build qtkeychain translations",
       "dependencies": [
         {
-          "name": "qt5-tools",
-          "host": true
+          "name": "qt5-tools"
         }
       ]
     }
