@@ -70,7 +70,7 @@ qt_download_submodule(  OUT_SOURCE_PATH SOURCE_PATH
                     )
 
 # Remove vendored dependencies to ensure they are not picked up by the build
-foreach(DEPENDENCY zlib freetype harfbuzz-ng libjpeg libpng double-conversion sqlite pcre2)
+foreach(DEPENDENCY zlib freetype libjpeg libpng double-conversion sqlite pcre2)
     if(EXISTS ${SOURCE_PATH}/src/3rdparty/${DEPENDENCY})
         file(REMOVE_RECURSE ${SOURCE_PATH}/src/3rdparty/${DEPENDENCY})
     endif()
@@ -101,12 +101,18 @@ list(APPEND CORE_OPTIONS
     -system-pcre
     -system-doubleconversion
     -system-sqlite
-    -system-harfbuzz
     -icu
     -no-angle # Qt does not need to build angle. VCPKG will build angle!
     -no-glib
     -openssl-linked
     )
+
+if(VCPKG_TARGET_IS_OSX)
+    list(APPEND CORE_OPTIONS -qt-harfbuzz)
+else()
+    file(REMOVE_RECURSE ${SOURCE_PATH}/src/3rdparty/harfbuzz-ng)
+    list(APPEND CORE_OPTIONS -system-harfbuzz)
+endif()
 
 if(WITH_PGSQL_PLUGIN)
     list(APPEND CORE_OPTIONS -sql-psql)
