@@ -61,7 +61,7 @@ set(CORE_OPTIONS
     #-ltcg
     #-combined-angle-lib
     # ENV ANGLE_DIR to external angle source dir. (Will always be compiled with Qt)
-    #-optimized-tools
+    -optimized-tools
     #-force-debug-info
     -verbose
 )
