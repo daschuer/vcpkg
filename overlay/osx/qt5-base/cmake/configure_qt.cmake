@@ -80,10 +80,10 @@ function(configure_qt)
         
         set(BUILD_OPTIONS ${_csc_OPTIONS} ${_csc_OPTIONS_${_buildname}}
                 -prefix ${CURRENT_INSTALLED_DIR}
-                #-extprefix ${CURRENT_INSTALLED_DIR}  
+                #-extprefix ${CURRENT_INSTALLED_DIR}
                 ${EXT_BIN_DIR}
-                -hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}
-                #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
+                #-hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}
+                -hostprefix ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5
                 #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/lib # could probably be move to manual-link
                 #-hostlibdir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5/lib
                 #-hostbindir ${CURRENT_HOST_INSTALLED_DIR}/tools/qt5${_path_suffix_${_buildname}}/bin 
@@ -100,7 +100,7 @@ function(configure_qt)
                 -libdir ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib
                 -I ${CURRENT_INSTALLED_DIR}/include
                 -I ${CURRENT_INSTALLED_DIR}/include/qt5
-                -L ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib
+                -L ${CURRENT_INSTALLED_DIR}${_path_suffix_${_buildname}}/lib 
                 ${_manual_link_${_buildname}}
                 -xplatform ${_csc_TARGET_PLATFORM}
             )
