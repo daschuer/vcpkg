@@ -22,7 +22,45 @@ jobs:
             vcpkg_triplet: x64-osx-min1012
             vcpkg_host_triplet: x64-osx-min1012
             vcpkg_overlay_ports: overlay/osx:overlay/ports
-            vcpkg_packages_extras: qt5-macextras
+            vcpkg_packages_extras: >-
+              qt5-macextras
+              ableton:arm64-osx-min1100
+              chromaprint:arm64-osx-min1100
+              fdk-aac:arm64-osx-min1100
+              ffmpeg:arm64-osx-min1100
+              fftw3:arm64-osx-min1100
+              hidapi:arm64-osx-min1100
+              hss1394:arm64-osx-min1100
+              libdjinterop:arm64-osx-min1100
+              libebur128:arm64-osx-min1100
+              libflac:arm64-osx-min1100
+              libkeyfinder:arm64-osx-min1100
+              libmodplug:arm64-osx-min1100
+              libogg:arm64-osx-min1100
+              libopusenc:arm64-osx-min1100
+              libsndfile[core]:arm64-osx-min1100
+              libusb:arm64-osx-min1100
+              libvorbis:arm64-osx-min1100
+              lilv:arm64-osx-min1100
+              mp3lame:arm64-osx-min1100
+              ms-gsl:arm64-osx-min1100
+              opus:arm64-osx-min1100
+              opusfile:arm64-osx-min1100
+              portaudio[asio]:arm64-osx-min1100
+              portmidi:arm64-osx-min1100
+              protobuf:arm64-osx-min1100
+              pthreads:arm64-osx-min1100
+              qt5-base:arm64-osx-min1100
+              qt5-declarative:arm64-osx-min1100
+              qt5-script:arm64-osx-min1100
+              qt5-svg:arm64-osx-min1100
+              qt5-translations:arm64-osx-min1100
+              qtkeychain:arm64-osx-min1100
+              rubberband:arm64-osx-min1100
+              soundtouch:arm64-osx-min1100
+              taglib:arm64-osx-min1100
+              wavpack:arm64-osx-min1100
+              qt5-macextras:arm64-osx-min1100
             vcpkg_cache: /Users/runner/.cache/vcpkg/archives
             check_disk_space: df -h
     env:
