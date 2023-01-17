@@ -30,7 +30,7 @@ jobs:
         ableton
         chromaprint
         fdk-aac
-        ffmpeg
+        ffmpeg[openmpt]
         fftw3
         hidapi
         hss1394
