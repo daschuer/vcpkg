@@ -18,6 +18,7 @@ list(FILTER HEADERS EXCLUDE REGEX "_impl\\.hpp$|_internal\\.h$")
 
 include_directories(
   .
+  src
   build/svn_version
   libopenmpt
   common
@@ -43,6 +44,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(libopenmpt ${SOURCES})
+set_target_properties(libopenmpt PROPERTIES OUTPUT_NAME openmpt)
 
 target_compile_definitions(libopenmpt PRIVATE
   -DMPT_WITH_MPG123 -DMPT_WITH_OGG
@@ -83,7 +85,7 @@ configure_file(libopenmpt/libopenmpt.pc.in libopenmpt.pc)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libopenmpt.pc DESTINATION lib/pkgconfig)
 
 install(TARGETS libopenmpt EXPORT libopenmpt-targets)
-install(EXPORT libopenmpt-targets DESTINATION share/libopenmpt NAMESPACE libopenmpt::)
+install(EXPORT libopenmpt-targets DESTINATION share/libopenmpt NAMESPACE unofficial::libopenmpt::)
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/libopenmpt-config.cmake [[
 include(CMakeFindDependencyMacro)
 find_dependency(ZLIB)
