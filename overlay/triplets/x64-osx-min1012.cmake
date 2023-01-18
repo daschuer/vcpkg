@@ -15,5 +15,13 @@ set(VCPKG_OSX_ARCHITECTURES x86_64)
 
 set(VCPKG_OSX_DEPLOYMENT_TARGET 10.12)
 set(VCPKG_C_FLAGS -mmacosx-version-min=10.12)
-set(VCPKG_CXX_FLAGS -mmacosx-version-min=10.12)
+
+if(${PORT} MATCHES "libopenmpt")
+    # Workaround for an XCode bug, marking std::visit not available 
+    # https://stackoverflow.com/questions/52310835/xcode-10-call-to-unavailable-function-stdvisit/53868971bug 
+    set(VCPKG_CXX_FLAGS -mmacosx-version-min=10.14)
+else()
+    set(VCPKG_CXX_FLAGS -mmacosx-version-min=10.12)
+endif()
+
 
