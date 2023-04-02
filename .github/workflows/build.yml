@@ -105,8 +105,9 @@ jobs:
       if: ${{ steps.cache.outputs.cache-matched-key == null }} 
       run: |
         cmake -E tar xv ${{ steps.download-file.outputs.file-path }}
-        cd
         dir
+        dir /AS
+        dir /S
         cmake -E rename mixxx-deps-2.3-x64-windows-049b5ad/installed ${{ matrix.vcpkg_path }}/installed
       working-directory: ${{ matrix.vcpkg_path }}
       
