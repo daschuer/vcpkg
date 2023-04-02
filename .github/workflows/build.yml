@@ -108,6 +108,7 @@ jobs:
         cd
         dir
         cmake -E rename mixxx-deps-2.3-x64-windows-049b5ad/installed ${{ matrix.vcpkg_path }}/installed
+      working-directory: ${{ matrix.vcpkg_path }}
       
     - name: Check available disk space
       run: ${{ matrix.check_disk_space }}
