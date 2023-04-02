@@ -85,14 +85,22 @@ jobs:
       run: brew install yasm automake
 
     - name: Set up cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ matrix.vcpkg_path }}/installed
         key: vcpkg-installed-${{ matrix.vcpkg_triplet }}-${{ github.ref }}-${{ github.run_number }}
         restore-keys: |
           vcpkg-installed-${{ matrix.vcpkg_triplet }}-${{ github.ref }}
           vcpkg-installed-${{ matrix.vcpkg_triplet }}
-
+         
+    - name: "verify cache"            
+      if: ${{ steps.cache.outputs.cache-matched-key == null }} 
+      run: echo cache restore fails
+      
+    - name: "verify cache"            
+      if: ${{ steps.cache.outputs.cache-matched-key != null }} 
+      run: echo cache restored from ${{ steps.cache.outputs.cache-matched-key }}
+      
     - name: Check available disk space
       run: ${{ matrix.check_disk_space }}
 
