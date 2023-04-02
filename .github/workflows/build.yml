@@ -94,16 +94,17 @@ jobs:
           vcpkg-installed-${{ matrix.vcpkg_triplet }}
          
     - name: Download ${{ env.DEPS_BASE_NAME }} 
+      id: download-file
       uses: carlosperate/download-file-action@v2     
       if: ${{ steps.cache.outputs.cache-matched-key == null }} 
       with:
         file-url: 'https://downloads.mixxx.org/dependencies/2.3/Windows/mixxx-deps-2.3-x64-windows-049b5ad.zip'
         sha256: '82c49c82f54989cca0b35ab331afcb5fed486e929464beeede321583a778940a'
       
-    - name: Extract ${{ env.DEPS_BASE_NAME }} 
+    - name: Extract ${{ env.DEPS_BASE_NAME }} 1 ${{ steps.download-file-action.outputs.file-path }} 2 ${{ steps.download-file.outputs.file-path }}
       if: ${{ steps.cache.outputs.cache-matched-key == null }} 
       run: |
-        cmake -E tar xv ${{ steps.download-file-action.outputs.file-path }}
+        cmake -E tar xv D:\a\vcpkg\vcpkg\mixxx-deps-2.3-x64-windows-049b5ad.zip 
         cmake -E rename mixxx-deps-2.3-x64-windows-049b5ad/installed ${{ matrix.vcpkg_path }}/installed
       
     - name: Check available disk space
