@@ -93,13 +93,18 @@ jobs:
           vcpkg-installed-${{ matrix.vcpkg_triplet }}-${{ github.ref }}
           vcpkg-installed-${{ matrix.vcpkg_triplet }}
          
-    - name: "verify cache"            
+    - name: Download ${{ env.DEPS_BASE_NAME }} 
+      uses: carlosperate/download-file-action@v2     
       if: ${{ steps.cache.outputs.cache-matched-key == null }} 
-      run: echo cache restore fails
+      with:
+        file-url: 'https://downloads.mixxx.org/dependencies/2.3/Windows/mixxx-deps-2.3-x64-windows-049b5ad.zip'
+        sha256: '82c49c82f54989cca0b35ab331afcb5fed486e929464beeede321583a778940a'
       
-    - name: "verify cache"            
-      if: ${{ steps.cache.outputs.cache-matched-key != null }} 
-      run: echo cache restored from ${{ steps.cache.outputs.cache-matched-key }}
+    - name: Extract ${{ env.DEPS_BASE_NAME }} 
+      if: ${{ steps.cache.outputs.cache-matched-key == null }} 
+      run: |
+        cmake -E tar xv ${{ steps.download-file-action.outputs.file-path }}
+        cmake -E rename mixxx-deps-2.3-x64-windows-049b5ad/installed ${{ matrix.vcpkg_path }}/installed
       
     - name: Check available disk space
       run: ${{ matrix.check_disk_space }}
