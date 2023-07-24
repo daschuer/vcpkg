@@ -9,6 +9,7 @@ vcpkg_from_github(
     SHA512 50509acfc4128fd31435631f71ac8cd0350acd9e290f78502723149016e7f07c9d84182ba99e0938b1873fecda09393d3fd7af8dabfb0d89cdcdd8a69a917e70
     PATCHES
         fix-dll-support.patch
+        core-foundation-deps.patch
 )
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
