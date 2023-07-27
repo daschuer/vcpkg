@@ -1,0 +1,38 @@
+From 8fe2958d3202b409f7d54f53b41fca7b225c3f0e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20Sch=C3=BCrmann?= <daschuer@mixxx.org>
+Date: Thu, 27 Jul 2023 15:06:24 +0200
+Subject: [PATCH] Don't use apsolute path when linking to macOS frameworks
+
+---
+ CMakeLists.txt | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87d0bb832..75aa89e7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -305,17 +305,13 @@ elseif(UNIX)
+     target_include_directories(PortAudio PRIVATE src/hostapi/coreaudio)
+     set(PORTAUDIO_PUBLIC_HEADERS "${PORTAUDIO_PUBLIC_HEADERS}" include/pa_mac_core.h)
+ 
+-    find_library(COREAUDIO_LIBRARY CoreAudio REQUIRED)
+-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox REQUIRED)
+-    find_library(AUDIOUNIT_LIBRARY AudioUnit REQUIRED)
+-    find_library(COREFOUNDATION_LIBRARY CoreFoundation REQUIRED)
+-    find_library(CORESERVICES_LIBRARY CoreServices REQUIRED)
+-    target_link_libraries(PortAudio PRIVATE
+-      "${COREAUDIO_LIBRARY}"
+-      "${AUDIOTOOLBOX_LIBRARY}"
+-      "${AUDIOUNIT_LIBRARY}"
+-      "${COREFOUNDATION_LIBRARY}"
+-      "${CORESERVICES_LIBRARY}"
++    target_link_libraries(PortAudio 
++      PRIVATE
++        -Wl,-framework,CoreAudio
++        -Wl,-framework,AudioToolbox
++        -Wl,-framework,AudioUnit
++        -Wl,-framework,CoreFoundation
++        -Wl,-framework,CoreServices
+     )
+     target_compile_definitions(PortAudio PUBLIC PA_USE_COREAUDIO=1)
+     set(PKGCONFIG_CFLAGS "${PKGCONFIG_CFLAGS} -DPA_USE_COREAUDIO=1")
