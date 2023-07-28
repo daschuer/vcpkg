@@ -59,7 +59,7 @@ jobs:
         ms-gsl
         opus
         opusfile
-        portaudio[asio]
+        portaudio
         portmidi
         protobuf
         pthreads
