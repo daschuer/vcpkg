@@ -14,7 +14,7 @@ jobs:
             vcpkg_triplet: x64-windows
             vcpkg_host_triplet: x64-windows           
             vcpkg_overlay_ports: overlay/windows;overlay/ports
-            vcpkg_packages_extras: angle libid3tag libmad qt5-winextras
+            vcpkg_packages_extras: libid3tag libmad mesa
             check_disk_space: Get-PSDrive
           - os: macos-11
             vcpkg_path: /Users/runner/mixxx-vcpkg
