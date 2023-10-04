@@ -56,12 +56,6 @@ jobs:
         portmidi
         protobuf
         pthreads
-        qt5compat
-        qtbase
-        qtdeclarative
-        qtsvg
-        qttranslations
-        qtkeychain-qt6
         rubberband
         soundtouch
         taglib
