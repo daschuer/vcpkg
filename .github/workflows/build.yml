@@ -34,7 +34,7 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.vcpkg_host_triplet }}
       DEPS_BASE_NAME: mixxx-deps
-      DEVELOPER_DIR: /Applications/Xcode_12.4.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
       MIXXX_VERSION: 2.5
     name: ${{ matrix.vcpkg_triplet }}
     runs-on: ${{ matrix.os }}
@@ -86,7 +86,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
           brew update && brew install nasm autoconf-archive
-          /bin/bash -c "sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer"
+          /bin/bash -c "sudo xcode-select --switch /Applications/Xcode_14.2.app/Contents/Developer"
           xcrun --show-sdk-version
 
     - name: Check available disk space
