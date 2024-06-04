@@ -18,13 +18,13 @@ jobs:
             vcpkg_triplet: x64-windows
             vcpkg_host_triplet: x64-windows           
             check_disk_space: Get-PSDrive
-          - os: macos-11
+          - os: macos-12
             vcpkg_path: /Users/runner/mixxx-vcpkg
             vcpkg_bootstrap: ./bootstrap-vcpkg.sh
             vcpkg_triplet: x64-osx-min1100
             vcpkg_host_triplet: x64-osx-min1100
             check_disk_space: df -h
-          - os: macos-11
+          - os: macos-12
             vcpkg_path: /Users/runner/mixxx-vcpkg
             vcpkg_bootstrap: ./bootstrap-vcpkg.sh
             vcpkg_triplet: arm64-osx-min1100-release
