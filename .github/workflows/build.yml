@@ -33,6 +33,14 @@ jobs:
             vcpkg_triplet: arm64-osx-min1100-release
             vcpkg_host_triplet: x64-osx-min1100-release
             check_disk_space: df -h
+          - os: windows-2019
+            vcpkg_path: D:\mixxx-vcpkg
+            vcpkg_bootstrap: .\bootstrap-vcpkg.bat
+            vcpkg_triplet: arm64ec-windows
+            vcpkg_host_triplet: x64-windows           
+            vcpkg_overlay_ports: overlay/windows;overlay/ports
+            vcpkg_packages_extras: angle libid3tag libmad qt5-winextras
+            check_disk_space: Get-PSDrive 
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.vcpkg_host_triplet }}
