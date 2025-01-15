@@ -72,6 +72,7 @@
       "name": "portaudio",
       "features": ["asio"]
     },
+    "oscpack",
     "portmidi",
     "protobuf",
     "pthreads",
