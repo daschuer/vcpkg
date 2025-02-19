@@ -34,7 +34,10 @@
     "ableton-link",
     "benchmark",
     "chromaprint",
-    "fdk-aac",
+    {
+      "name": "fdk-aac",
+      "default-features": false
+    }
     "ffmpeg",
     "fftw3",
     "grantlee",
