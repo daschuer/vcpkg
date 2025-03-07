@@ -10,6 +10,10 @@ vcpkg_from_gitlab(
 
 vcpkg_add_to_path("${CURRENT_HOST_INSTALLED_DIR}/tools/libxml2")
 
+# msgfmt can't deal with drive letters on Windows, so we need to use a relative data dir
+file(RELATIVE_PATH GETTEXTDATADIRREL "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}" "${SOURCE_PATH}/data")
+set(ENV{GETTEXTDATADIR} "${GETTEXTDATADIRREL}")
+
 vcpkg_configure_meson(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
