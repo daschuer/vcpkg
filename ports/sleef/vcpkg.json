@@ -5,7 +5,7 @@
   "description": "SIMD Library for Evaluating Elementary Functions, vectorized libm and DFT",
   "homepage": "https://sleef.org/",
   "license": "BSL-1.0",
-  "supports": "!uwp & !(arm & windows) & !(arm64 & osx)",
+  "supports": "!uwp & !(arm & windows)",
   "dependencies": [
     {
       "name": "vcpkg-cmake",
