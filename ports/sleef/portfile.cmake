@@ -15,6 +15,7 @@ vcpkg_cmake_configure(
         -DSLEEF_BUILD_GNUABI_LIBS=${VCPKG_TARGET_IS_LINUX}
         -DSLEEF_BUILD_TESTS=OFF
         -DSLEEF_BUILD_INLINE_HEADERS=OFF
+        -DNATIVE_BUILD_DIR=${CURRENT_HOST_INSTALLED_DIR}
 )
 
 vcpkg_cmake_install()
