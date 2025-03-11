@@ -24,7 +24,10 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 vcpkg_copy_pdbs()
-vcpkg_copy_tools(TOOL_NAMES mkrename mkalias AUTO_CLEAN)
+vcpkg_copy_tools(
+    TOOL_NAMES mkrename mkalias 
+    SEARCH_DIR "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin"
+    AUTO_CLEAN)
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/sleef)
 vcpkg_fixup_pkgconfig()
 
