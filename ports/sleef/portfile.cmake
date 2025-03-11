@@ -6,6 +6,11 @@ vcpkg_from_github(
     HEAD_REF master
 )
 
+set(CROSSCOMP_OPTIONS "")
+if (VCPKG_CROSSCOMPILING)
+    set(CROSSCOMP_OPTIONS -DNATIVE_BUILD_DIR="${CURRENT_HOST_INSTALLED_DIR}/tools/${PORT}")
+endif()
+
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
@@ -14,44 +19,15 @@ vcpkg_cmake_configure(
         -DSLEEF_BUILD_QUAD=ON
         -DSLEEF_BUILD_GNUABI_LIBS=${VCPKG_TARGET_IS_LINUX}
         -DSLEEF_BUILD_TESTS=OFF
-        -DSLEEF_BUILD_INLINE_HEADERS=OFF
-        -DNATIVE_BUILD_DIR=${CURRENT_HOST_INSTALLED_DIR}
+        ${CROSSCOMP_OPTIONS}
 )
 
 vcpkg_cmake_install()
-vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/sleef)
 vcpkg_copy_pdbs()
+vcpkg_copy_tools(TOOL_NAMES mkrename mkalias AUTO_CLEAN)
+vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/sleef)
 vcpkg_fixup_pkgconfig()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(INSTALL "${SOURCE_PATH}/LICENSE.txt" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
-if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
-    file(INSTALL "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/mkrename${VCPKG_TARGET_EXECUTABLE_SUFFIX}" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-endif()
-if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "debug")
-    file(INSTALL "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/mkrename${VCPKG_TARGET_EXECUTABLE_SUFFIX}" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-endif()
 
-# Install DLL and PDB files
-if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
-    if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
-        if(VCPKG_TARGET_IS_WINDOWS)
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleef.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleef.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleefdft.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleefdft.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleefquad.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin/sleefquad.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-        endif()
-    endif()
-    if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "debug")
-        if(VCPKG_TARGET_IS_WINDOWS)
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleef.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleef.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleefdft.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleefdft.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleefquad.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-            file(COPY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/bin/sleefquad.pdb" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-        endif()
-    endif()
-endif()
