@@ -25,7 +25,7 @@ vcpkg_cmake_configure(
 vcpkg_cmake_install()
 vcpkg_copy_pdbs()
 vcpkg_copy_tools(
-    TOOL_NAMES mkrename mkalias 
+    TOOL_NAMES mkrename mkalias mkdisp 
     SEARCH_DIR "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin"
     DESTINATION "${CURRENT_PACKAGES_DIR}/tools/${PORT}/bin"
     AUTO_CLEAN)
