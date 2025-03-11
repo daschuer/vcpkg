@@ -7,7 +7,7 @@ vcpkg_from_github(
 )
 
 set(CROSSCOMP_OPTIONS "")
-if (VCPKG_CROSSCOMPILING)
+if(VCPKG_CROSSCOMPILING)
     set(CROSSCOMP_OPTIONS -DNATIVE_BUILD_DIR="${CURRENT_HOST_INSTALLED_DIR}/tools/${PORT}")
 endif()
 
@@ -24,11 +24,13 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 vcpkg_copy_pdbs()
-vcpkg_copy_tools(
-    TOOL_NAMES mkrename qmkrename mkalias mkdispatch mkdisp qmkdisp mkunroll 
-    SEARCH_DIR "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin"
-    DESTINATION "${CURRENT_PACKAGES_DIR}/tools/${PORT}/bin"
-    AUTO_CLEAN)
+if(NOT VCPKG_CROSSCOMPILING)
+    vcpkg_copy_tools(
+        TOOL_NAMES mkrename qmkrename mkalias mkdispatch mkdisp qmkdisp mkunroll 
+        SEARCH_DIR "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/bin"
+        DESTINATION "${CURRENT_PACKAGES_DIR}/tools/${PORT}/bin"
+        AUTO_CLEAN)
+endif()    
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/sleef)
 vcpkg_fixup_pkgconfig()
 
