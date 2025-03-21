@@ -8,6 +8,8 @@ vcpkg_from_gitlab(
     SHA512 "17b443c2c09a432d09e4c83db956f8c0c3a768cfa9ffb8c87cd2d7c9002b95d010094e2bc64dd35946205a0f8b2d87c4f8f0a1faec86443e2edd502aa8f7cc8f"
 )
 
+set(VCPKG_BUILD_TYPE release)  # only data
+
 vcpkg_add_to_path("${CURRENT_HOST_INSTALLED_DIR}/tools/libxml2")
 
 # msgfmt can't deal with drive letters on Windows, so we need to use a relative data dir
@@ -26,10 +28,6 @@ vcpkg_configure_meson(
 vcpkg_install_meson()
 
 vcpkg_fixup_pkgconfig()
-
-file(REMOVE_RECURSE
-    "${CURRENT_PACKAGES_DIR}/debug"
-)
 
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/COPYING")
 
