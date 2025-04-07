@@ -84,9 +84,9 @@ if("fedora-ffmpeg-free-safe" IN_LIST FEATURES)
     list(JOIN FFMPEG_ENABLE_DECODERS "," FFMPEG_ENABLE_DECODERS)
     list(JOIN FFMPEG_ENABLE_ENCODERS "," FFMPEG_ENABLE_ENCODERS)
     
-    string(APPEND OPTIONS " --disable-encoders --disable-decoders")
-    string(APPEND OPTIONS " --enable-encoder=\"${FFMPEG_ENABLE_ENCODERS}\"")
-    string(APPEND OPTIONS " --enable-decoder=\"${FFMPEG_ENABLE_DECODERS}\"")
+    # string(APPEND OPTIONS " --disable-encoders --disable-decoders")
+    # string(APPEND OPTIONS " --enable-encoder=\"${FFMPEG_ENABLE_ENCODERS}\"")
+    # string(APPEND OPTIONS " --enable-decoder=\"${FFMPEG_ENABLE_DECODERS}\"")
     # Option for which the source has been removed
     string(APPEND OPTIONS " --disable-indev=\"dshow,gdigrab,vfwcap\" --disable-decoder=\"h264,hevc,libxevd,vc1,vvc\" --disable-coreimage")
 endif()
