@@ -105,16 +105,19 @@ build_ffmpeg() {
         # Paranoia check - https://src.fedoraproject.org/rpms/ffmpeg/blob/f41/f/ffmpeg.spec#_726	
         # DECODER	
         for i in H264 HEVC HEVC_RKMPP VC1 VVC; do	
+            echo hallo 
             # grep -q "#define CONFIG_${i}_DECODER 0" "$PATH_TO_BUILD_DIR/config_components.h" || (>&2 echo "ABORT! Didn't find ${i}_DECODER" && exit 1)
         done 
             
         # ENCODER	
         for i in LIBX264 LIBX264RGB LIBX265; do	
+            echo hallo
             # grep -q "#define CONFIG_${i}_ENCODER 0" "$PATH_TO_BUILD_DIR/config_components.h" || (>&2 echo "ABORT! Didn't find ${i}_ENCODER" && exit 1)
         done
             
         for i in H264 HEVC; do	
             for j in MF VIDEOTOOLBOX; do	
+                echo hallo
                 # grep -q "#define CONFIG_${i}_${j}_ENCODER 0" "$PATH_TO_BUILD_DIR/config_components.h" || (>&2 echo "ABORT! Didn't find ${i}_${j}_ENCODER" && exit 1)
             done
         done
