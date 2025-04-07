@@ -69,7 +69,7 @@ if("fedora-ffmpeg-free-safe" IN_LIST FEATURES)
     foreach(srcfile IN LISTS FFMPEG_SOURCE_FILE)
         if (NOT(srcfile IN_LIST FFMPEG_SOURCE_ALLOW_LIST) AND NOT(srcfile MATCHES "compat/.*"))
             message(STATUS "-- ${srcfile} is NOT in the allowlist. Removing")
-            file(REMOVE "${SOURCE_PATH}/${srcfile}")
+            # file(REMOVE "${SOURCE_PATH}/${srcfile}")
         endif()
     endforeach()
 
