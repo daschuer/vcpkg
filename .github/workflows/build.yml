@@ -18,23 +18,23 @@ jobs:
             vcpkg_triplet: x64-windows
             vcpkg_host_triplet: x64-windows           
             check_disk_space: Get-PSDrive
-          - os: macos-13
+          - os: macos-14
             vcpkg_path: /Users/runner/mixxx-vcpkg
             vcpkg_bootstrap: ./bootstrap-vcpkg.sh
             vcpkg_triplet: x64-osx-min1100
-            vcpkg_host_triplet: x64-osx-min1100
+            vcpkg_host_triplet: arm64-osx-min1100
             check_disk_space: df -h
-          - os: macos-13
+          - os: macos-14
             vcpkg_path: /Users/runner/mixxx-vcpkg
             vcpkg_bootstrap: ./bootstrap-vcpkg.sh
             vcpkg_triplet: arm64-osx-min1100-release
-            vcpkg_host_triplet: x64-osx-min1100-release
+            vcpkg_host_triplet: arm64-osx-min1100-release
             check_disk_space: df -h
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.vcpkg_host_triplet }}
       DEPS_BASE_NAME: mixxx-deps
-      DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_15.4.app/Contents/Developer
       MIXXX_VERSION: 2.5
     name: ${{ matrix.vcpkg_triplet }}
     runs-on: ${{ matrix.os }}
@@ -85,8 +85,8 @@ jobs:
     - name: "[macOS] Bootstrap vcpkg"
       if: runner.os == 'macOS'
       run: |
-          brew update && brew install nasm autoconf-archive
-          /bin/bash -c "sudo xcode-select --switch /Applications/Xcode_14.2.app/Contents/Developer"
+          brew update && brew install automake nasm autoconf-archive libtool
+          /bin/bash -c "sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer"
           xcrun --show-sdk-version
 
     - name: Check available disk space
