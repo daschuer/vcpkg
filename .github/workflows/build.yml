@@ -28,7 +28,7 @@ jobs:
             vcpkg_path: C:\mixxx-vcpkg
             vcpkg_bootstrap: .\bootstrap-vcpkg.bat
             vcpkg_triplet: arm64-windows-release
-            vcpkg_host_triplet: arm64-windows-release
+            vcpkg_host_triplet: arm64-windows
             check_disk_space: Get-PSDrive
           - os: macos-13
             deps_name: x64-osx-rel
