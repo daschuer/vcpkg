@@ -266,7 +266,7 @@ function(vcpkg_cmake_configure)
             "${ninja_configure_contents}")
 
         message(STATUS "${configuring_message}")
-        message(STATUS "${ninja_configure_contents}")
+        message(STATUS "ninja_configure_contents start ${ninja_configure_contents} ninja_configure_contents end")
         execute_process(            
             COMMAND "${NINJA}" -v -d explain
             WORKING_DIRECTORY "${build_dir_release}/vcpkg-parallel-configure"
