@@ -266,8 +266,13 @@ function(vcpkg_cmake_configure)
             "${ninja_configure_contents}")
 
         message(STATUS "${configuring_message}")
+        message(STATUS "${ninja_configure_contents}")
+        execute_process(            
+            COMMAND "${NINJA}" -v -d explain
+            WORKING_DIRECTORY "${build_dir_release}/vcpkg-parallel-configure"
+        )        
         vcpkg_execute_required_process(
-            COMMAND "${NINJA}" -v
+            COMMAND "${NINJA}" -v -d explain
             WORKING_DIRECTORY "${build_dir_release}/vcpkg-parallel-configure"
             LOGNAME "${arg_LOGFILE_BASE}"
             SAVE_LOG_FILES
