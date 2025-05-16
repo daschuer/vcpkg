@@ -1,3 +1,5 @@
+message(STATUS "BUILDTREES_DIR p0 ${BUILDTREES_DIR}")
+
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO ip7z/7zip
@@ -7,6 +9,8 @@ vcpkg_from_github(
     PATCHES
         fix_timespec_get_broken_on_android.patch
 )
+
+message(STATUS "BUILDTREES_DIR p1 ${BUILDTREES_DIR}")
 
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/7zip-config.cmake.in" DESTINATION "${SOURCE_PATH}")
