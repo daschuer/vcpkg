@@ -16,10 +16,10 @@ jobs:
       matrix:
         include:
           - os: windows-2022
-            deps_name: x64-windows
+            deps_name: x86-windows
             vcpkg_path: C:\mixxx-vcpkg
             vcpkg_bootstrap: .\bootstrap-vcpkg.bat
-            vcpkg_triplet: x64-windows
+            vcpkg_triplet: x86-windows
             vcpkg_host_triplet: x64-windows
             check_disk_space: Get-PSDrive
           - os: windows-11-arm
