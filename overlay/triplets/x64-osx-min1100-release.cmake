@@ -17,8 +17,4 @@ set(VCPKG_OSX_ARCHITECTURES x86_64)
 # https://doc.qt.io/qt-6.5/supported-platforms.html#desktop-platforms
 set(VCPKG_OSX_DEPLOYMENT_TARGET 11.0)
 
-# All Apple computer supported by macOS 11, have processors with AVX instruction set
-set(VCPKG_C_FLAGS "${VCPKG_C_FLAGS} -mavx")
-set(VCPKG_CXX_FLAGS "${VCPKG_CXX_FLAGS} -mavx")
-
 set(VCPKG_BUILD_TYPE release)
