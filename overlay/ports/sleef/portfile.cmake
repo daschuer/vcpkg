@@ -1,15 +1,12 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO shibatch/sleef
-    REF ${VERSION}
-    SHA512 9b47667b33a685308aa65f848b7ee620e9e8783ca4851fd57e873f34310b486fb351813f573f2a7a71b6bdc5c8b2c5ef4eb4f66c890ddfbfada7bb9d74626c0b
+    REF 3.9.0-40-g75f80b3
+    SHA512 d2dd887b376cc3cedf83da502f9add6c9fa83a02066903a1462e974ca8070f27a1dd8f1deb0d8ff5d8945e00e85e856c62b09067746c32f993b2f633f0a9561a
     HEAD_REF master
     PATCHES
-        android-neon.diff
-        exclude-testerutil.diff
         export-link-libs.diff
         sleefdft.pc.diff
-        seh-cpu-ext.diff
 )
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS options
@@ -28,11 +25,7 @@ vcpkg_cmake_configure(
         ${options}
         -DSLEEF_BUILD_LIBM=ON
         -DSLEEF_BUILD_QUAD=ON
-        -DSLEEF_BUILD_GNUABI_LIBS=${VCPKG_TARGET_IS_LINUX}
         -DSLEEF_BUILD_TESTS=OFF
-        -DSLEEF_DISABLE_SSL=ON
-        -DSLEEF_DISABLE_SVE=ON  # arm64 build issues, officially unmaintained
-        -DSLEEF_ENABLE_TLFLOAT=OFF
         -DSLEEF_ENABLE_TESTER4=OFF
 )
 
