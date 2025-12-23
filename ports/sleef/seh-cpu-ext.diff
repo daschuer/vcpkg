@@ -11,7 +11,7 @@ index 41b69d9..4d395c3 100644
 +    (*tryExt)();
 +    cache = 1;
 +  } __except(1) {
-+    cache = 0;
++    #error
 +  }
 +#else
    void (*org);
