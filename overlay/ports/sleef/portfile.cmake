@@ -23,6 +23,7 @@ vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         ${options}
+        -DSLEEF_ENABLE_SSE2=ON
         -DSLEEF_BUILD_LIBM=ON
         -DSLEEF_BUILD_QUAD=ON
         -DSLEEF_BUILD_TESTS=OFF
