@@ -235,10 +235,13 @@ jobs:
       with:
           java-version: "17"
           distribution: temurin
-
+          
     - name: "[android] Install Android SDK"
       if: startsWith(matrix.deps_name, 'arm64-android')
       run: |
+          echo 'Defaults env_keep += "JAVA_HOME"' | sudo tee /etc/sudoers.d/java_home > /dev/null
+          sudo chmod 0440 /etc/sudoers.d/java_home 
+        
           java --version
           sudo java --version
           sudo bash -c 'echo $JAVA_HOME'
