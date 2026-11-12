@@ -242,7 +242,7 @@ jobs:
           echo 'Defaults env_keep += "JAVA_HOME"' | sudo tee /etc/sudoers.d/java_home > /dev/null
           sudo chmod 0440 /etc/sudoers.d/java_home 
 
-          echo "deb http://ubuntu.com resolute multiverse" | sudo tee /etc/apt/sources.list.d/resolute-multiverse.list > /dev/null
+          echo "deb http://azure.archive.ubuntu.com/ubuntu resolute multiverse" | sudo tee /etc/apt/sources.list.d/resolute-multiverse.list > /dev/null
 
           cat <<EOF | sudo tee /etc/apt/preferences.d/resolute-multiverse > /dev/null
           Package: *
