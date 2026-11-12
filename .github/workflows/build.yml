@@ -241,27 +241,16 @@ jobs:
       run: |
           echo 'Defaults env_keep += "JAVA_HOME"' | sudo tee /etc/sudoers.d/java_home > /dev/null
           sudo chmod 0440 /etc/sudoers.d/java_home 
-        
-          java --version
-          sudo java --version
-          sudo bash -c 'echo $JAVA_HOME'
-          sudo -E bash -c 'echo $JAVA_HOME'
-           
+          
           # Download the Resolute (26.04) .deb packages from Ubuntu's archive
           wget -q http://mirrors.kernel.org/ubuntu/pool/multiverse/g/google-android-installers/google-android-build-tools-19.1.0-installer_19.1.0+1785528795-1_amd64.deb -O /tmp/build-tools.deb
           wget -q http://mirrors.kernel.org/ubuntu/pool/multiverse/g/google-android-installers/google-android-licenses_1785528795-1_all.deb -O /tmp/licenses.deb
           wget -q http://mirrors.kernel.org/ubuntu/pool/multiverse/g/google-android-installers/google-android-cmdline-tools-19.0-installer_19.0+1785528795-1_amd64.deb -O /tmp/cmdline-tools.deb
-          SKIP_JDK_VERSION_CHECK=1 sudo apt-get install -y /tmp/build-tools.deb /tmp/licenses.deb /tmp/cmdline-tools.deb
+          sudo apt-get install -y /tmp/build-tools.deb /tmp/licenses.deb /tmp/cmdline-tools.deb
           rm -f /tmp/build-tools.deb /tmp/licenses.deb /tmp/cmdline-tools.deb
-
-          java --version
-          sudo java --version
-          sudo bash -c 'echo $JAVA_HOME'
-          sudo -E bash -c 'echo $JAVA_HOME'
-           
+          
           yes | sudo sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
           echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"
-          echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
           sudo sdkmanager --list_installed
 
     - name: "[ubuntu/android] Free up APT cachd"
