@@ -230,6 +230,7 @@ jobs:
       working-directory: ${{ matrix.vcpkg_path }}
    
     - name: Setup Java JDK 17
+      if: startsWith(matrix.deps_name, 'arm64-android')
       uses: actions/setup-java@v6
       with:
           java-version: "17"
@@ -238,6 +239,11 @@ jobs:
     - name: "[android] Install Android SDK"
       if: startsWith(matrix.deps_name, 'arm64-android')
       run: |
+          java --version
+          sudo java --version
+          sudo bash -c 'echo $JAVA_HOME'
+          sudo -E bash -c 'echo $JAVA_HOME'
+           
           # Download the Resolute (26.04) .deb packages from Ubuntu's archive
           wget -q http://mirrors.kernel.org/ubuntu/pool/multiverse/g/google-android-installers/google-android-build-tools-19.1.0-installer_19.1.0+1785528795-1_amd64.deb -O /tmp/build-tools.deb
           wget -q http://mirrors.kernel.org/ubuntu/pool/multiverse/g/google-android-installers/google-android-licenses_1785528795-1_all.deb -O /tmp/licenses.deb
@@ -254,8 +260,6 @@ jobs:
           echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"
           echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
           sudo sdkmanager --list_installed
-      env:
-          JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
 
     - name: "[ubuntu/android] Free up APT cachd"
       if: runner.os == 'Linux'
