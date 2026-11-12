@@ -240,14 +240,17 @@ jobs:
           rm -f /tmp/build-tools.deb /tmp/licenses.deb /tmp/cmdline-tools.deb
 
           sudo apt-get install -y openjdk-17-jdk
-
           sudo update-java-alternatives --set java-1.17.0-openjdk-amd64
-          export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
-          echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
+
+          java --version
+          sudo bash -c "echo $JAVA_HOME"
            
-          yes | sudo sudo -E sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
-          echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"   
-          sudo sudo -E sdkmanager --list_installed
+          yes | sudo sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
+          echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"
+          echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
+          sudo sdkmanager --list_installed
+      env:
+          JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
 
     - name: "[ubuntu/android] Free up APT cachd"
       if: runner.os == 'Linux'
