@@ -243,7 +243,9 @@ jobs:
           sudo update-java-alternatives --set java-1.17.0-openjdk-amd64
 
           java --version
-          sudo bash -c "echo $JAVA_HOME"
+          sudo java --version
+          sudo bash -c 'echo $JAVA_HOME'
+          sudo -E bash -c 'echo $JAVA_HOME'
            
           yes | sudo sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
           echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"
