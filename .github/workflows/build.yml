@@ -245,9 +245,9 @@ jobs:
           export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
           echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
            
-          yes | sudo SKIP_JDK_VERSION_CHECK=1 sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
+          yes | sudo sudo -E sdkmanager "platforms;android-${{ matrix.android_api }}" "platform-tools" "build-tools;${{ matrix.android_version }}" "ndk;${{ matrix.android_ndk }}"
           echo "ANDROID_NDK_HOME=/usr/lib/android-sdk/ndk/${{ matrix.android_ndk }}" >> "${GITHUB_ENV}"   
-          sudo SKIP_JDK_VERSION_CHECK=1 sdkmanager --list_installed
+          sudo sudo -E sdkmanager --list_installed
 
     - name: "[ubuntu/android] Free up APT cachd"
       if: runner.os == 'Linux'
