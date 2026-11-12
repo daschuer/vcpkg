@@ -74,8 +74,8 @@ jobs:
             vcpkg_bootstrap: ./bootstrap-vcpkg.sh
             vcpkg_triplet: arm64-android
             vcpkg_host_triplet: x64-linux-release
-            android_api: 35
-            android_version: 35.0.0
+            android_api: 36
+            android_version: 36.0.0
             android_ndk: 27.2.12479018
             check_disk_space: df -h
     env:
