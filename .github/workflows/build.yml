@@ -254,6 +254,17 @@ jobs:
     - name: Check available disk space
       run: ${{ matrix.check_disk_space }}
 
+    # Bring the check_buildenv_floor.sh regression test forward, before the
+    # multi-hour build, so a checker regression aborts the job immediately
+    # instead of after the whole dependency build. The fixtures compile small
+    # C objects on this runner and assert how the checker classifies each
+    # required symbol class.
+    - name: Test the buildenv floor checker
+      if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
+      shell: bash
+      working-directory: ${{ matrix.vcpkg_path }}
+      run: bash .github/test_buildenv_floor.sh
+
     - name: Build packages
       run: ./vcpkg install --vcpkg-root=${{ matrix.vcpkg_path }} --clean-after-build --recurse --feature-flags="-compilertracking,manifests,registries,versions" --x-abi-tools-use-exact-versions
       working-directory: ${{ matrix.vcpkg_path }}
