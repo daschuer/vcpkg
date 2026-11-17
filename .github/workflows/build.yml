@@ -260,16 +260,25 @@ jobs:
       
 
     # The buildenvs are built on the ubuntu-22.04 floor the AppImage jobs rely
-    # on. Host tools restored from the NuGet binary cache may have been built on
-    # a newer host and need a newer glibc or libstdc++; verify them against this
-    # host's own libc/libstdc++/libgcc_s before the archive is exported, so the
-    # published buildenv always runs on the floor. The audited directory is the
-    # host triplet's (only == target triplet for the native linux buildenvs).
-    - name: Audit host tools against the build host ABI floor
+    # on. Packages restored from the NuGet binary cache may have been built on a
+    # newer host and need a newer glibc or libstdc++, both as version nodes
+    # (tools and shared libraries) and as plain symbol references (static
+    # libraries). Verify the whole native host triplet against this host's own
+    # libc/libstdc++/libgcc_s before the archive is exported, so the published
+    # buildenv always runs on the floor. Only the host tools directory is
+    # audited for the cross buildenvs, where target libs link against a
+    # different target toolchain.
+    - name: Audit buildenv against the build host ABI floor
       if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
       shell: bash
       working-directory: ${{ matrix.vcpkg_path }}
-      run: bash .github/check_buildenv_floor.sh "vcpkg_installed/${{ matrix.vcpkg_host_triplet }}/tools"
+      env:
+        AUDIT_DIR: vcpkg_installed/${{ matrix.vcpkg_host_triplet }}
+      run: |
+        if [ "${{ matrix.vcpkg_host_triplet }}" != "${{ matrix.vcpkg_triplet }}" ]; then
+            AUDIT_DIR="$AUDIT_DIR/tools"
+        fi
+        bash .github/check_buildenv_floor.sh "$AUDIT_DIR"
 
     - name: "[Windows] Sign release DLLs"
       env:
